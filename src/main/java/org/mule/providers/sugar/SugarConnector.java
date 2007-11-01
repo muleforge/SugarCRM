@@ -19,6 +19,8 @@ import org.mule.umo.lifecycle.InitialisationException;
 public class SugarConnector extends AbstractConnector
 {
 
+    
+
     /* For general guidelines on writing transports see
        http://mule.mulesource.org/display/MULE/Writing+Transports */
 

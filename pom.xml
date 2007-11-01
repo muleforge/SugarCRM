@@ -8,7 +8,7 @@
 	<packaging>jar</packaging>
 	<version>1.0</version>
 	<properties>
-		<muleVersion>1.4.2</muleVersion>
+		<muleVersion>1.4.1</muleVersion>
 	</properties>
 	<distributionManagement>
 		<repository>
@@ -48,11 +48,6 @@
 	<name>Mule SugarCRM Module</name>
 	<description>Module that provides connectivity to SugarCRM.</description>
 	<dependencies>
-        <dependency>
-            <groupId>org.mule</groupId>
-            <artifactId>mule-core</artifactId>
-            <version>1.4</version>
-        </dependency>
 		<dependency>
 			<groupId>org.mule.transports</groupId>
 			<artifactId>mule-transport-vm</artifactId>
@@ -76,11 +71,6 @@
 		<dependency>
 			<groupId>org.mule.modules</groupId>
 			<artifactId>mule-module-client</artifactId>
-			<version>${muleVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.tests</groupId>
-			<artifactId>mule-tests-core</artifactId>
 			<version>${muleVersion}</version>
 		</dependency>
 		<dependency>
