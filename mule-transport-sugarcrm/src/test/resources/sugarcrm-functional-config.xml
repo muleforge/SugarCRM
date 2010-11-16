@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesource.org/schema/mule/core/2.2"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:sugarcrm="http://www.mulesource.org/schema/mule/sugarcrm/2.2"
+	xmlns:context="http://www.springframework.org/schema/context"
+	
+	xsi:schemaLocation="
+       http://www.mulesource.org/schema/mule/core/2.2 http://www.mulesource.org/schema/mule/core/2.2/mule.xsd
+       http://www.mulesource.org/schema/mule/sugarcrm/2.2 http://www.mulesource.org/schema/mule/sugarcrm/2.2/mule-sugarcrm.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<sugarcrm:connector name="sugarcrmConnector">
+		<!-- TODO Add connector specific properties here and then assert that they 
+			have been set in org.mule.transport.sugarcrm.SugarcrmNamespaceHandlerTestCase -->
+	</sugarcrm:connector>
+
+	<custom-transformer name="SingleQueryTransformer"
+		class="org.mule.transport.sugarcrm.transformers.SingleQueryTransformer" />
+
+	<custom-transformer name="MultiQueryTransformer"
+		class="org.mule.transport.sugarcrm.transformers.MultiQueryTransformer" />
+
+	<custom-transformer name="UpdateTransformer"
+		class="org.mule.transport.sugarcrm.transformers.UpdateTransformer" />
+
+	<custom-transformer name="ModuleFieldsTransformer"
+		class="org.mule.transport.sugarcrm.transformers.ModuleFieldsTransformer" />
+														
+	<context:property-placeholder location="sugarcrm.properties"/>
+	
+	<model name="sugarcrmFunctionalTestModel">
+
+		<service name="sugarcrmServiceLogin">
+			<inbound>
+				<inbound-endpoint address="vm://test.login"
+					synchronous="true" />
+			</inbound>
+			<outbound>
+				<pass-through-router>
+					<outbound-endpoint
+						address="sugarcrm://${sugarcrmUrl}?operation=login"
+						synchronous="true" />
+				</pass-through-router>
+			</outbound>
+		</service>
+
+		<service name="sugarcrmServiceSingleQuery">
+			<inbound>
+				<inbound-endpoint address="vm://test.singleQuery"
+					synchronous="true" />
+			</inbound>
+			<outbound>
+				<pass-through-router>
+					<outbound-endpoint
+						address="sugarcrm://${sugarcrmUrl}?operation=query"
+						transformer-refs="SingleQueryTransformer" synchronous="true" />
+				</pass-through-router>
+			</outbound>
+		</service>
+
+		<service name="sugarcrmServiceMultiQuery">
+			<inbound>
+				<inbound-endpoint address="vm://test.multiQuery"
+					synchronous="true" />
+			</inbound>
+			<outbound>
+				<pass-through-router>
+					<outbound-endpoint
+						address="sugarcrm://${sugarcrmUrl}?operation=query"
+						transformer-refs="MultiQueryTransformer" synchronous="true" />
+				</pass-through-router>
+			</outbound>
+		</service>
+
+		<service name="sugarcrmServiceUpdate">
+			<inbound>
+				<inbound-endpoint address="vm://test.update"
+					synchronous="true" />
+			</inbound>
+			<outbound>
+				<pass-through-router>
+					<outbound-endpoint
+						address="sugarcrm://${sugarcrmUrl}?operation=update"
+						transformer-refs="UpdateTransformer" synchronous="true" />
+				</pass-through-router>
+			</outbound>
+		</service>
+
+		
+		<service name="sugarcrmget_module_fields">
+			<inbound>
+				<inbound-endpoint address="vm://test.get_module_fields"
+					synchronous="true" />
+			</inbound>
+			<outbound>
+				<pass-through-router>
+					<outbound-endpoint
+						address="sugarcrm://${sugarcrmUrl}?operation=getmodulefields"
+						transformer-refs="ModuleFieldsTransformer" synchronous="true" />
+				</pass-through-router>
+			</outbound>
+		</service>
+
+	    <service name="sugarcrmServiceLogout">
+			<inbound>
+				<inbound-endpoint address="vm://test.logout"
+					synchronous="true" />
+			</inbound>
+			<outbound>
+				<pass-through-router>
+					<outbound-endpoint
+						address="sugarcrm://${sugarcrmUrl}?operation=logout"
+						synchronous="true" />
+				</pass-through-router>
+			</outbound>
+		</service>
+	</model>
+
+</mule>
