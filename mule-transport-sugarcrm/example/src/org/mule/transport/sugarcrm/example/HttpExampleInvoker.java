@@ -41,7 +41,8 @@ public class HttpExampleInvoker implements Callable
 
         GetEntryRequestType entryRequest = new GetEntryRequestType();
 
-        entryRequest.setId("a6700a6f-508f-c449-39e9-4c974d5f0ce7");
+        //Enter request object ID here. The details of this request object will be displayed to the user
+        entryRequest.setId("");
         entryRequest.setSession(sessionId);
         entryRequest.setModuleName("Accounts");
 

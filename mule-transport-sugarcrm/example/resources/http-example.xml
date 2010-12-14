@@ -20,6 +20,8 @@
 		<add-message-property key="Content-Type" value="text/html" />
 	</message-properties-transformer>
 
+        <context:property-placeholder location="sugarcrm.properties"/>
+
 	<model name="sugarcrmHttpExample">
 	
 	<service name="test">
@@ -58,7 +60,7 @@
 			<outbound>
 				<pass-through-router>
 					<outbound-endpoint
-						address="sugarcrm://192.168.2.14/sugarcrm/service/v2/soap.php?operation=login"
+						address="sugarcrm://${sugarcrmUrl}?operation=login"
 						synchronous="true" />
 				</pass-through-router>
 			</outbound>
@@ -72,7 +74,7 @@
 			<outbound>
 				<pass-through-router>
 					<outbound-endpoint
-						address="sugarcrm://192.168.2.14/sugarcrm/service/v2/soap.php?operation=query"
+						address="sugarcrm://${sugarcrmUrl}?operation=query"
 						transformer-refs="SingleQueryTransformer" synchronous="true" />
 				</pass-through-router>
 			</outbound>
